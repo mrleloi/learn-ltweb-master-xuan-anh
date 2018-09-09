@@ -46,7 +46,8 @@ public class Student : Person
 public partial class _Default : System.Web.UI.Page 
 {
     protected string res;
-    private string path = "Logs";
+    public static readonly string pathServer = Server.MapPath("~");
+    private string pathLogs = pathServer + "\\Logs";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -62,10 +63,9 @@ public partial class _Default : System.Web.UI.Page
         catch (Exception ex)
         {
             string fileName = this.GetType().Name + MethodBase.GetCurrentMethod().Name;
-            string serverPath = Server.MapPath("~") + "\\";
-            LogFiles.WriteLog(ex.Message, serverPath + this.path, fileName);
+            LogFiles.WriteLog(ex.Message, _Default.pathServer, fileName);
         }
 
-        Debug.WriteLine("--------");
+        Debug.WriteLine("--------" + pathServer);
     }
 }
