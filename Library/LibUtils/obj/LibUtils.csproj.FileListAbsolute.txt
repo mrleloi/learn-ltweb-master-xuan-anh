@@ -3,3 +3,4 @@ D:\ltweb-9-9-2018-LeLoi-b15dccn315\Library\LibUtils\bin\Debug\LibUtils.pdb
 D:\ltweb-9-9-2018-LeLoi-b15dccn315\Library\LibUtils\obj\Debug\ResolveAssemblyReference.cache
 D:\ltweb-9-9-2018-LeLoi-b15dccn315\Library\LibUtils\obj\Debug\LibUtils.dll
 D:\ltweb-9-9-2018-LeLoi-b15dccn315\Library\LibUtils\obj\Debug\LibUtils.pdb
+D:\ltweb-9-9-2018-LeLoi-b15dccn315\Library\LibUtils\bin\Debug\SMSGateway.Threading.dll

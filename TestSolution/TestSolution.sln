@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\FirstWeb\", "..\Websites\FirstWeb\", "{4E88EB5A-5671-42EB-99E3-ED4768C1FC7D}"
 	ProjectSection(WebsiteProperties) = preProject
+		ProjectReferences = "{3D11C275-9290-40EC-9776-1494AAB13F2A}|LibUtils.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/FirstWeb"
 		Debug.AspNetCompiler.PhysicalPath = "..\Websites\FirstWeb\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\FirstWeb\"
