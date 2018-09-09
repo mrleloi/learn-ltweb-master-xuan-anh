@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Data;
 using System.Configuration;
@@ -9,7 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Reflection;
-
+//using System.Threading;
 using Lib.Utilities;
 
 public class Person
@@ -45,7 +46,7 @@ public class Student : Person
 public partial class _Default : System.Web.UI.Page 
 {
     protected string res;
-    private string path = "./Logs";
+    private string path = "Logs";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -55,15 +56,16 @@ public partial class _Default : System.Web.UI.Page
             int age = 18;
             Person p = new Student(name, age);
             res = p.render();
-            int i = 1, j = 0;
-            int z = i / j;
+            int z = 0;
+            int a = 1 / z;
         }
         catch (Exception ex)
         {
             string fileName = this.GetType().Name + MethodBase.GetCurrentMethod().Name;
-            LogFiles.WriteLog(ex.Message, this.path, fileName);
+            string serverPath = Server.MapPath("~") + "\\";
+            LogFiles.WriteLog(ex.Message, serverPath + this.path, fileName);
         }
 
-        Debug.WriteLine(res);
+        Debug.WriteLine("--------");
     }
 }
