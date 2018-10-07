@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	height:auto;
+	background:url(../images/body3.png);
+	/*url(images/body1.png);*/
+	/*url(images/banner_top2.jpg);*/
+	}
+#all{ 
+	/*margin:0px auto;*/
+	width:100%;
+	height:auto;
+	}
+#top{
+	 height:60px;
+	/*height:200px;*/
+	}
+#menu1{
+	/*background:#000;*/
+	height:50px;
+	width:auto;
+	}
+#banner{
+	border-radius:20px;
+	background:url(../images/body.png);/*url(images/texture2.png);*/
+	/*url(images/banner_top%20copy.jpg);*/
+	/*background:#0C9;*/
+	height:50px
+	}
+#menu2{
+	/*background:#0C3;*/
+	height:30px;
+	width:auto;
+	}
+#center{
+	
+	height:auto;
+	}
+#bottom{
+	clear:both;
+	background:#B0AC45;
+	height:auto;
+	}
+a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: blue;
+	font-weight:bold;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: blue;
+}
+a:hover {
+	text-decoration: underline;
+	color: orange;
+}
+a:active {
+	text-decoration: none;
+	color: #603813;
+}
+.link_chu_den:link {
+	color:#000;
+	text-decoration:none;
+		}
+.link_chu_den:hover {
+	color:#FFF;
+	text-decoration:none;
+		}
+.link_chu_den:active {
+	color:#FFF;
+	text-decoration:underline;
+		}
+.link_chu_den:visited {
+	color:#FFF;
+	text-decoration:none;
+		}		
+.link_chu_trang:link {
+	color:#FFF;
+	text-decoration:none;
+		}
+.link_chu_trang:hover {
+	color:#FFF;
+	text-decoration:none;
+		}
+.link_chu_trang:active {
+	color:#FFF;
+	text-decoration:underline;
+		}
+.link_chu_trang:visited {
+	color:#FFF;
+	text-decoration:none;
+		}
+.link_trang:visited {
+	color:#F00;
+	text-decoration:none;
+		}		
+p{
+	font:Georgia, "Times New Roman", Times, serif;
+	color:#FFF;
+	}
+.btn
+{
+background-color:#e2bd65;
+text-align:center;
+color:Blue;
+
+
+
+}

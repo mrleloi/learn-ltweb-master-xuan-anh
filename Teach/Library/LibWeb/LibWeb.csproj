@@ -1,0 +1,70 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8DE9472F-62BB-47F7-BC59-CB8A63DAF95F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LibWeb</RootNamespace>
+    <AssemblyName>LibWeb</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\Aligns.cs" />
+    <Compile Include="Code\ArticleContentMediaItems.cs" />
+    <Compile Include="Code\ArticleContents.cs" />
+    <Compile Include="Code\ArticleMediaItems.cs" />
+    <Compile Include="Code\Articles.cs" />
+    <Compile Include="Code\Categories.cs" />
+    <Compile Include="Code\CategoryStatus.cs" />
+    <Compile Include="Code\EditorStatus.cs" />
+    <Compile Include="Code\ImageMediaItems.cs" />
+    <Compile Include="Code\Images.cs" />
+    <Compile Include="Code\ImageTypes.cs" />
+    <Compile Include="Code\MediaItems.cs" />
+    <Compile Include="Code\WebConstants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibSqlServer\LibSqlServer\LibSqlServer.csproj">
+      <Project>{84A62CD6-7878-493F-86A6-59E2F78B4D8A}</Project>
+      <Name>LibSqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibUtilities\LibUtilities.csproj">
+      <Project>{B62E7C83-D91E-4F52-A749-A0BE62E9D99E}</Project>
+      <Name>LibUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

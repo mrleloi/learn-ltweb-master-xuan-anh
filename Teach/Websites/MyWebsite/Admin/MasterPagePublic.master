@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPagePublic.master.cs" Inherits="MasterPagePublic" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+  <head runat="server">
+    <title>.: Hệ thống quản trị đào tạo :.</title>
+    <meta name="description" content="ALT Jsc."/>
+    <meta http-equiv="Content-Language" content="en-us"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="bdc_style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="pageBody" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0">
+    <form id="frmMain" runat="server" method="post">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	    <tr>
+	      <td width="100%">            
+	      </td>
+	    </tr>
+      </table>    
+      <table border="0" width="100%" cellpadding="0" cellspacing="0">
+        <tr>            
+          <td valign="top" width="15" class="mainContentCell">&nbsp;</td>
+          <td valign="top" width="*" class="mainContentCell">
+            <br/>
+            <asp:ValidationSummary ID="m_validationSummary" runat="server" CssClass="ValidatorSummary" />
+            <asp:contentplaceholder id="m_contentBody" runat="server" >
+            </asp:contentplaceholder>
+          </td>
+        </tr>
+        </table>       
+        <table width="100%" height="13" border="0" cellpadding="0" cellspacing="0">
+		  <tr valign="top">
+		    <td bgcolor="#d8dfec" width="800"><asp:Image ID="Image2" runat="server" ImageUrl="~/admin/images/bottom_left_corner.gif"  Width="16" Height="13"/></td>
+		  </tr>
+		  <tr valign="top">
+		 	<td>&nbsp;</td>
+		  </tr>
+		  <tr valign="top">
+			<td>
+			  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			    <tr valign="middle" class="footerText">
+				  <td style="height: 14px">
+                    Hệ thống <font color="red"> Quản lý đào tạo </font> phiên bản 1.0, 08/2016. <br/>
+                    Địa chỉ: <%=OFFICE_ADDRESS%><br/>
+                    Email <a href="mailto:<%=MAIL_USER%>" class="footerText" title="email <%=MAIL_USER %>"><%=MAIL_USER %></a> 
+                    Điện thoại: <%=PHONE_USER%>
+                  </td>
+			    </tr>
+		      </table>
+			</td>
+		  </tr>
+		  <tr valign="top">
+			<td>&nbsp;</td>
+		  </tr>
+		</table>
+    </form>
+  </body>
+</html>

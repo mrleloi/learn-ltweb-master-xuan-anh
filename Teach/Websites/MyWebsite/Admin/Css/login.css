@@ -1,0 +1,81 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	height:auto;
+	}
+#all{ 
+	background:#FFF;
+	margin:10px auto;
+	width:530px;
+	height:500px;
+	}
+#center{
+	margin-bottom:90px;
+	margin-top:90px;
+	background:url(../images/banner3.gif);
+	width:530px;
+	height:320px;
+	}
+/*.dangnhap{
+	cursor:pointer;
+	border:outset 1px #ccc;
+	background:#999;
+	color:#666;
+	font-weight:bold;
+	padding: 1px 2px;
+	background:url(../images/button.png) repeat-x left top;
+	}*/
+/*hieu ung cho button*/
+.button {
+	display: inline-block; /* dàn hàng ngang cho button */
+	outline: none;  /* bỏ hiệu ứng chấm chấm xung quanh khi click vào button */
+	cursor: pointer; /* kiểu con trỏ */
+	text-align: center; /* căn giữa text trên button */
+	text-decoration: none; /* Bỏ gạch dưới của text trên button */
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3); /* tạo bóng cho text trên button */
+	-webkit-border-radius: .5em; /* bo góc tròn cho button -webkit là cho các trình duyệt như Chrom, Safari,Opere */
+	-moz-border-radius: .5em;/* bo góc, với trình duyệt FF */
+	border-radius: .5em;      /* cho IE */
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); /* tạo bóng cho button */
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	overflow: hidden;
+}
+.button:hover {
+	text-decoration: none; 
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+/*mau cho button*/
+.orange {
+	color:#492a0e;/* màu của text trên button */  
+	border: solid 1px #FFFFFF;  
+	background: #fad240; /* màu nền chính */    
+	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#fcc90c)); /* Tạo Gradient: from(#faa51a) là màu ở phía trên của button, to(#f47a20)  màu phía dưới của button --> các trình duyệt thuộc webkit ( Chrom, Opera, Safari)*/
+	background: -moz-linear-gradient(top, #f47a20 , #fcc90c ); /* trên FF */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#fcc90c '); /* Trên IE */
+}
+ 
+/*Css khi hover vào button
+*/
+.orange:hover {
+	background:#fcc90c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fcc90c), to(#fad240));
+	background: -moz-linear-gradient(top, #fcc90c , #fad240);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcc90c', endColorstr='#fad240');
+	}
+/* Css khi chọn button*/
+.orange:active {
+	color: #fcc90c;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fcc90c), to(#f47a20));
+	background: -moz-linear-gradient(top,  #fcc90c,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcc90c', endColorstr='#f47a20');
+}
+.label
+{
+	font-weight:bold;
+}

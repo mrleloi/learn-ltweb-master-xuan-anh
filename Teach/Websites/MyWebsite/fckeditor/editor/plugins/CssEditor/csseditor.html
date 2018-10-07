@@ -1,0 +1,1384 @@
+<!--
+ * CssEditor plugin for FCKEditor.
+ * Copyright (C) 2004 by Dmitriy Barbasura (delta3@pisem.net)
+ * 
+ * Licensed under the terms of the GNU Lesser General Public License:
+ * 		http://www.opensource.org/licenses/lgpl-license.php
+ * 
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+	<title>CSS Editor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="noindex, nofollow" name="robots">
+	<script type='text/javascript' src='csseditor.js'></script>
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+
+var oEditor = window.parent.InnerDialogLoaded();
+var sContent="";
+
+function OnLoad()
+{
+	// First of all, translate the dialog box texts.
+	oEditor.FCKLanguageManager.TranslatePage( document );
+	window.parent.SetAutoSize( true );
+	loadCssEditor();
+}
+
+function Ok()
+{
+	sContent=document.getElementById('Code').value.replace(/\r|\n|(\r\n)/g, ' ');
+	var oSelection = oEditor.FCKSelection;
+
+	if (BrowserInfo.IsIE)
+	{
+		if ( oSelection.GetType() == 'Text' )
+		{
+			var oElement=oSelection.GetParentElement();
+
+			oSelection.GetParentElement().style.cssText=sContent;
+		}
+		else
+		{
+			oEditor.FCK.InsertHtml("<span style=\""+sContent+"\">Text</span>");
+		}
+	}
+	else
+	{
+		var oNode=oSelection.GetParentElement();
+		if (oNode.nodeName!="BODY")
+		{
+			oNode.style.cssText=sContent;
+		}
+		else
+		{
+			oEditor.FCK.InsertHtml("<span style=\""+sContent+"\">Text</span>");
+		}
+	}
+
+}
+
+	</script>
+
+</head>
+
+<body onload="OnLoad();" scroll="no" style="overflow: hidden;">
+<form name="frmMain" id="frmMain">
+		<div id="divType">
+<!-- Start: TYPE properties -->
+<table id="menuType" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Font family:</td>
+		<td>
+			<select id="fontFamily" name="fontFamily" class="input-select">
+				<option value=""></option>
+				<option value="Arial, Helvetica, sans-serif">Arial, Helvetica, sans-serif</option>
+				<option value="Times New Roman, Times, serif">Times New Roman, Times, serif</option>
+				<option value="Courier New, Courier, mono">Courier New, Courier, mono</option>
+				<option value="Georgia, Times New Roman, Times, serif">Georgia, Times New Roman, Times, serif</option>
+				<option value="Verdana, Arial, Helvetica, sans-serif">Verdana, Arial, Helvetica, sans-serif</option>
+				<option value="Geneva, Arial, Helvetica, sans-serif">Geneva, Arial, Helvetica, sans-serif</option>
+			</select>
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="fontFamily_other" name="fontFamily_other" value="other" onclick="Other.fontFamily(this);" > Other
+			<input type="text" id="fontFamily_value" name="fontFamily_value" class="input-text" disabled style="width: 120px;">
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Font size:</td>
+		<td>
+			<select id="fontSize" name="fontSize" class="input-select">
+				<option value=""></option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="12">12</option>
+				<option value="14">14</option>
+				<option value="16">16</option>
+				<option value="18">18</option>
+				<option value="24">24</option>
+				<option value="36">36</option>
+			</select>
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="fontSize_other" name="fontSize_other" value="other" onclick="Other.fontSize(this);" > Other
+			<input type="text" id="fontSize_value" name="fontSize_value" class="input-text" disabled>
+			<select id="fontSize_unit" name="fontSize_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Color:</td>
+		<td>
+			<input type="text" id="color" name="color" class="input-text" value="" onchange="Update.colorPreview(this);" onblur="Update.colorPreview(this);">
+			<span id="colorPreview" class="color-preview" onclick="Update.colorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Font style:</td>
+		<td>
+			<select id="fontStyle" name="fontStyle" class="input-select">
+				<option value=""></option>
+				<option value="normal">normal</option>
+				<option value="italic">italic</option>
+				<option value="oblique">oblique</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Font weight:</td>
+		<td>
+			<select id="fontWeight" name="fontWeight" class="input-select">
+				<option value=""></option>
+				<option value="normal">normal</option>
+				<option value="bold">bold</option>
+				<option value="bolder">bolder</option>
+				<option value="lighter">lighter</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+				<option value="300">300</option>
+				<option value="400">400</option>
+				<option value="500">500</option>
+				<option value="600">600</option>
+				<option value="700">700</option>
+				<option value="800">800</option>
+				<option value="900">900</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Font variant:</td>
+		<td>
+			<select id="fontVariant" name="fontVariant" class="input-select">
+				<option value=""></option>
+				<option value="normal">normal</option>
+				<option value="small-caps">small-caps</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Text transform:</td>
+		<td>
+			<select id="textTransform" name="textTransform" class="input-select">
+				<option value=""></option>
+				<option value="capitalize">capitalize</option>
+				<option value="uppercase">uppercase</option>
+				<option value="lowercase">lowercase</option>
+				<option value="none">none</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Text decoration:</td>
+		<td class="property-text">
+			<input type="checkbox" id="textDecoration_underline" name="textDecoration_underline" value="underline" onclick="Update.textDecorationChange(this);"> Underline<br>
+			<input type="checkbox" id="textDecoration_overline" name="textDecoration_overline" value="overline" onclick="Update.textDecorationChange(this);"> Overline<br>
+			<input type="checkbox" id="textDecoration_line_through" name="textDecoration_line_through" value="line-through" onclick="Update.textDecorationChange(this);"> Line Through<br>
+			<input type="checkbox" id="textDecoration_blink" name="textDecoration_blink" value="blink" onclick="Update.textDecorationChange(this);"> Blink<br>
+			<input type="checkbox" id="textDecoration_none" name="textDecoration_none" value="none" onclick="Update.textDecorationNone();"> None<br>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Line height:</td>
+		<td class="property-text">
+			<input type="checkbox" id="lineHeight_normal" name="lineHeight_normal" value="normal" > Normal
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="lineHeight_other" name="lineHeight_other" value="other" onclick="Other.lineHeight(this);" > Other
+			<input type="text" id="lineHeight_value" name="lineHeight_value" class="input-text" disabled>
+			<select id="lineHeight_unit" name="lineHeight_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>
+		</td>
+	</tr>
+</table>
+<!-- End: TYPE properties -->
+		</div>
+		<div id="divBackground" style="DISPLAY: none">
+<!-- Start: BACKGROUND properties -->
+<table id="menuBackground" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Background color:</td>
+		<td>
+			<input type="text" id="backgroundColor" name="backgroundColor" class="input-text" value="" onchange="Update.backgroundColorPreview(this);" onblur="Update.backgroundColorPreview(this);">
+			<span id="backgroundColorPreview" class="color-preview" onclick="Update.backgroundColorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Background image:</td>
+		<td class="property-text">
+			<input type="checkbox" id="backgroundImage_none" name="backgroundImage_none" value="none" >None
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="backgroundImage_other" name="backgroundImage_other" value="other" onclick="Other.backgroundImage(this);" > Other
+			URL: <input type="text" id="backgroundImage_value" name="backgroundImage_value" class="input-text" disabled style="width: 120px;">
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Background repeat:</td>
+		<td>
+			<select id="backgroundRepeat" name="backgroundRepeat" class="input-select">
+				<option value=""></option>
+				<option value="no-repeat">no-repeat</option>
+				<option value="repeat">repeat</option>
+				<option value="repeat-x">repeat-x</option>
+				<option value="repeat-y">repeat-y</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Background attachment:</td>
+		<td>
+			<select id="backgroundAttachment" name="backgroundAttachment" class="input-select">
+				<option value=""></option>
+				<option value="fixed">fixed</option>
+				<option value="scroll">scroll</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Horizontal position:</td>
+		<td class="property-text">
+			<select id="horizontalPosition" name="horizontalPosition" class="input-select">
+				<option value=""></option>
+				<option value="left">left</option>
+				<option value="center">center</option>
+				<option value="right">right</option>
+			</select>
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="horizontalPosition_other" name="horizontalPosition_other" value="other" onclick="Other.horizontalPosition(this);" > Other
+			<input type="text" id="horizontalPosition_value" name="horizontalPosition_value" class="input-text" disabled>
+			<select id="horizontalPosition_unit" name="horizontalPosition_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Vertical position:</td>
+		<td class="property-text">
+			<select id="verticalPosition" name="verticalPosition" class="input-select">
+				<option value=""></option>
+				<option value="top">top</option>
+				<option value="center">center</option>
+				<option value="bottom">bottom</option>
+			</select>
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="verticalPosition_other" name="verticalPosition_other" value="other" onclick="Other.verticalPosition(this);" > Other
+			<input type="text" id="verticalPosition_value" name="verticalPosition_value" class="input-text" disabled>
+			<select id="verticalPosition_unit" name="verticalPosition_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>			
+		</td>
+	</tr>
+
+
+</table>
+<!-- End: BACKGROUND properties -->
+		</div>
+		<div id="divBlock" style="DISPLAY: none">
+<!-- Start: BLOCK properties -->
+<table id="menuBlock" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Word spacing:</td>
+		<td>
+			<input type="text" id="wordSpacing" name="wordSpacing" class="input-text" value="">
+			<select id="wordSpacing_unit" name="wordSpacing_unit" class="input-select">
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Letter spacing:</td>
+		<td>
+			<input type="text" id="letterSpacing" name="letterSpacing" class="input-text" value="">
+			<select id="letterSpacing_unit" name="letterSpacing_unit" class="input-select">
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Vertical alignment:</td>
+		<td>
+			<select id="verticalAlign" name="verticalAlign" class="input-select">
+				<option value=""></option>
+				<option value="baseline">baseline</option>
+				<option value="sub">sub</option>
+				<option value="super">super</option>
+				<option value="top">top</option>
+				<option value="text-top">text-top</option>
+				<option value="middle">middle</option>
+				<option value="bottom">bottom</option>
+				<option value="text-bottom">text-bottom</option>
+			</select>			
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="verticalAlign_other" name="verticalAlign_other" value="other" onclick="Other.verticalAlign(this);" > Other
+			<input type="text" id="verticalAlign_value" name="verticalAlign_value" class="input-text" disabled>%
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Text alignment:</td>
+		<td>
+			<select id="textAlign" name="textAlign" class="input-select">
+				<option value=""></option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+				<option value="center">center</option>
+				<option value="justify">justify</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Text indent:</td>
+		<td>
+			<input type="text" id="textIndent" name="textIndent" class="input-text" value="">
+			<select id="textIndent_unit" name="textIndent_unit" class="input-select">
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="ex">%</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">White space:</td>
+		<td class="property-text">
+			<select id="whiteSpace" name="whiteSpace" class="input-select">
+				<option value=""></option>
+				<option value="normal">normal</option>
+				<option value="pre">pre</option>
+				<option value="nowrap">nowrap</option>
+			</select>			
+			No preview.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Display:</td>
+		<td>
+			<select id="display" name="display" class="input-select">
+				<option value=""></option>
+				<option value="none">none</option>
+				<option value="inline">inline</option>
+				<option value="block">block</option>
+				<option value="list-item">list-item</option>
+				<option value="run-in">run-in</option>
+				<option value="compact">compact</option>
+				<option value="marker">marker</option>
+				<option value="table">table</option>
+				<option value="inline-table">inline-table</option>
+				<option value="table-row-group">table-row-group</option>
+				<option value="table-header-group">table-header-group</option>
+				<option value="table-footer-group">table-footer-group</option>
+				<option value="table-row">table-row</option>
+				<option value="table-column-group">table-column-group</option>
+				<option value="table-column">table-column</option>
+				<option value="table-cell">table-cell</option>
+				<option value="table-caption">table-caption</option>
+			</select>			
+		</td>
+	</tr>
+</table>
+<!-- End: BLOCK properties -->
+		</div>
+		<div id="divBox" style="DISPLAY: none">
+<!-- Start: BOX properties -->
+<table id="menuBox" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Width:</td>
+		<td class="property-text">
+			<input type="checkbox" id="width_auto" name="width_auto" value="auto" > Auto
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="width_other" name="width_other" value="other" onclick="Other.width(this);" > Other
+			<input type="text" id="width_value" name="width_value" class="input-text" disabled>
+			<select id="width_unit" name="width_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Height:</td>
+		<td class="property-text">
+			<input type="checkbox" id="height_auto" name="height_auto" value="auto" > Auto
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="height_other" name="height_other" value="other" onclick="Other.height(this);" > Other
+			<input type="text" id="height_value" name="height_value" class="input-text" disabled>
+			<select id="height_unit" name="height_unit" class="input-select" disabled>
+				<option value="px">pixels</option>
+				<option value="pt">points</option>
+				<option value="cm">cm</option>
+				<option value="mm">mm</option>
+				<option value="in">in</option>
+				<option value="pc">picas</option>
+				<option value="em">ems</option>
+				<option value="ex">exs</option>
+				<option value="%">%</option>   
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Float:</td>
+		<td class="property-text">
+			<select id="float" name="float" class="input-select">
+				<option value=""></option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+				<option value="none">none</option>
+			</select>			
+			No preview.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Clear:</td>
+		<td class="property-text">
+			<select id="clear" name="clear" class="input-select">
+				<option value=""></option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+				<option value="both">both</option>
+				<option value="none">none</option>
+			</select>			
+			No preview.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Padding:</td>
+		<td class="property-text">
+			<input type="checkbox" id="padding_all" name="padding_all" value="other" checked onclick="Other.paddingAll(this);"> Same for all
+		</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<input type="text" id="paddingTop" name="paddingTop" class="input-text">
+						<select id="paddingTop_unit" name="paddingTop_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<input type="text" id="paddingRight" name="paddingRight" class="input-text" disabled>
+						<select id="paddingRight_unit" name="paddingRight_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<input type="text" id="paddingBottom" name="paddingBottom" class="input-text" disabled>
+						<select id="paddingBottom_unit" name="paddingBottom_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<input type="text" id="paddingLeft" name="paddingLeft" class="input-text" disabled>
+						<select id="paddingLeft_unit" name="paddingLeft_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Margin:</td>
+		<td class="property-text">
+			<input type="checkbox" id="margin_all" name="margin_all" value="other" checked onclick="Other.marginAll(this);"> Same for all
+		</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<input type="text" id="marginTop" name="marginTop" class="input-text">
+						<select id="marginTop_unit" name="marginTop_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<input type="text" id="marginRight" name="marginRight" class="input-text" disabled>
+						<select id="marginRight_unit" name="marginRight_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<input type="text" id="marginBottom" name="marginBottom" class="input-text" disabled>
+						<select id="marginBottom_unit" name="marginBottom_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<input type="text" id="marginLeft" name="marginLeft" class="input-text" disabled>
+						<select id="marginLeft_unit" name="marginLeft_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<!-- End: BOX properties -->
+		</div>
+		<div id="divBorder" style="DISPLAY: none">
+<!-- Start: BORDER properties -->
+<table id="menuBorder" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Border style:</td>
+		<td class="property-text">
+			<input type="checkbox" id="borderStyle_all" name="borderStyle_all" value="other" checked onclick="Other.borderStyleAll(this);"> Same for all
+		</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<select id="borderTopStyle" name="borderTopStyle" class="input-select">
+							<option value=""></option>
+							<option value="none">none</option>
+							<option value="dotted">dotted</option>
+							<option value="dashed">dashed</option>
+							<option value="solid">solid</option>
+							<option value="double">double</option>
+							<option value="groove">groove</option>
+							<option value="ridge">ridge</option>
+							<option value="inset">inset</option>   
+							<option value="outset">outset</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<select id="borderRightStyle" name="borderRightStyle" class="input-select" disabled>
+							<option value=""></option>
+							<option value="none">none</option>
+							<option value="dotted">dotted</option>
+							<option value="dashed">dashed</option>
+							<option value="solid">solid</option>
+							<option value="double">double</option>
+							<option value="groove">groove</option>
+							<option value="ridge">ridge</option>
+							<option value="inset">inset</option>   
+							<option value="outset">outset</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<select id="borderBottomStyle" name="borderBottomStyle" class="input-select" disabled>
+							<option value=""></option>
+							<option value="none">none</option>
+							<option value="dotted">dotted</option>
+							<option value="dashed">dashed</option>
+							<option value="solid">solid</option>
+							<option value="double">double</option>
+							<option value="groove">groove</option>
+							<option value="ridge">ridge</option>
+							<option value="inset">inset</option>   
+							<option value="outset">outset</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<select id="borderLeftStyle" name="borderLeftStyle" class="input-select" disabled>
+							<option value=""></option>
+							<option value="none">none</option>
+							<option value="dotted">dotted</option>
+							<option value="dashed">dashed</option>
+							<option value="solid">solid</option>
+							<option value="double">double</option>
+							<option value="groove">groove</option>
+							<option value="ridge">ridge</option>
+							<option value="inset">inset</option>   
+							<option value="outset">outset</option>   
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Border width:</td>
+		<td class="property-text">
+			<input type="checkbox" id="borderWidth_all" name="borderWidth_all" value="other" checked onclick="Other.borderWidthAll(this);"> Same for all
+		</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<input type="text" id="borderTopWidth" name="borderTopWidth" class="input-text">
+						<select id="borderTopWidth_unit" name="borderTopWidth_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<input type="text" id="borderRightWidth" name="borderRightWidth" class="input-text" disabled>
+						<select id="borderRightWidth_unit" name="borderRightWidth_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<input type="text" id="borderBottomWidth" name="borderBottomWidth" class="input-text" disabled>
+						<select id="borderBottomWidth_unit" name="borderBottomWidth_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<input type="text" id="borderLeftWidth" name="borderLeftWidth" class="input-text" disabled>
+						<select id="borderLeftWidth_unit" name="borderLeftWidth_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Border color:</td>
+		<td class="property-text">
+			<input type="checkbox" id="borderColor_all" name="borderColor_all" value="other" checked onclick="Other.borderColorAll(this);"> Same for all
+		</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<input type="text" id="borderTopColor" name="borderTopColor" class="input-text" value="" onchange="Update.borderTopColorPreview(this);" onblur="Update.borderTopColorPreview(this);">
+						<span id="borderTopColorPreview" class="color-preview" onclick="Update.borderTopColorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<input type="text" id="borderRightColor" name="borderRightColor" class="input-text" value="" onchange="Update.borderRightColorPreview(this);" onblur="Update.borderRightColorPreview(this);" disabled>
+						<span id="borderRightColorPreview" class="color-preview" onclick="Update.borderRightColorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<input type="text" id="borderBottomColor" name="borderBottomColor" class="input-text" value="" onchange="Update.borderBottomColorPreview(this);" onblur="Update.borderBottomColorPreview(this);" disabled>
+						<span id="borderBottomColorPreview" class="color-preview" onclick="Update.borderBottomColorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<input type="text" id="borderLeftColor" name="borderLeftColor" class="input-text" value="" onchange="Update.borderLeftColorPreview(this);" onblur="Update.borderLeftColorPreview(this);" disabled>
+						<span id="borderLeftColorPreview" class="color-preview" onclick="Update.borderLeftColorPreviewDialog(this);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					</td>
+				</tr>
+			</table>
+	 		Set "Border color", "Border width", "Border style" at the same time.
+		</td>
+	</tr>
+</table>
+<!-- End: BORDER properties -->
+		</div>
+		<div id="divList" style="DISPLAY: none">
+<!-- Start: LIST properties -->
+<table id="menuList" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">List type:</td>
+		<td class="property-text">
+			<select id="listStyleType" name="listStyleType" class="input-select">
+				<option value=""></option>
+				<option value="disc">disc</option>
+				<option value="circle">circle</option>
+				<option value="square">square</option>
+				<option value="decimal">decimal</option>
+				<option value="lower-roman">lower-roman</option>
+				<option value="upper-roman">upper-roman</option>
+				<option value="lower-alpha">lower-alpha</option>
+				<option value="upper-alpha">upper-alpha</option>
+				<option value="none">none</option>
+			</select>
+			Use sample "Unordered List".
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">List bullet image:</td>
+		<td class="property-text">
+			URL: <input type="text" id="listStyleImage" name="listStyleImage" class="input-text" style="width: 120px;">
+			Use sample "Unordered List".
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">List position:</td>
+		<td class="property-text">
+			<select id="listStylePosition" name="listStylePosition" class="input-select">
+				<option value=""></option>
+				<option value="inside">inside</option>
+				<option value="outside">outside</option>
+			</select>
+			Use sample "Unordered List".
+		</td>
+	</tr>
+</table>
+<!-- End: LIST properties -->
+		</div>
+		<div id="divPositioning" style="DISPLAY: none">
+<!-- Start: POSITIONING properties -->
+<table id="menuPositioning" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Position type:</td>
+		<td class="property-text">
+			<select id="position" name="position" class="input-select">
+				<option value=""></option>
+				<option value="absolute">absolute</option>
+				<option value="relative">relative</option>
+				<option value="static">static</option>
+			</select>		
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Visibility:</td>
+		<td class="property-text">
+			<select id="visibility" name="visibility" class="input-select">
+				<option value=""></option>
+				<option value="inherit">inherit</option>
+				<option value="visible">visible</option>
+				<option value="hidden">hidden</option>
+			</select>		
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Z-index:</td>
+		<td class="property-text">
+			<input type="checkbox" id="zIndex_auto" name="zIndex_auto" value="auto" > Auto
+			<input type="checkbox" id="zIndex_other" name="zIndex_other" value="other" onclick="Other.ZIndex(this);" > Other
+			<input type="text" id="zIndex_value" name="zIndex_value" class="input-text" disabled>
+			No preview.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Overflow:</td>
+		<td class="property-text">
+			<select id="overflow" name="overflow" class="input-select">
+				<option value=""></option>
+				<option value="visible">visible</option>
+				<option value="hidden">hidden</option>
+				<option value="scroll">scroll</option>
+				<option value="auto">auto</option>
+			</select>		
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Placement:</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td>
+						<input type="text" id="top" name="top" class="input-text">
+						<select id="top_unit" name="top_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td>
+						<input type="text" id="right" name="right" class="input-text">
+						<select id="right_unit" name="right_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td>
+						<input type="text" id="bottom" name="bottom" class="input-text">
+						<select id="bottom_unit" name="bottom_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>   
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td>
+						<input type="text" id="left" name="left" class="input-text">
+						<select id="left_unit" name="left_unit" class="input-select">
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+							<option value="%">%</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Clip:</td>
+		<td class="property-text">
+			<table>
+				<tr>
+					<td class="property-text">Top:</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipTop_auto" name="clipTop_auto" value="auto" > Auto
+					</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipTop_other" name="clipTop_other" value="other" onclick="Other.clipTop(this);" > Other						
+						<input type="text" id="clipTop_value" name="clipTop_value" class="input-text" disabled>
+						<select id="clipTop_unit" name="clipTop_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Right:</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipRight_auto" name="clipRight_auto" value="auto" > Auto
+					</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipRight_other" name="clipRight_other" value="other" onclick="Other.clipRight(this);" > Other						
+						<input type="text" id="clipRight_value" name="clipRight_value" class="input-text" disabled>
+						<select id="clipRight_unit" name="clipRight_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Bottom:</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipBottom_auto" name="clipBottom_auto" value="auto" > Auto
+					</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipBottom_other" name="clipBottom_other" value="other" onclick="Other.clipBottom(this);" > Other						
+						<input type="text" id="clipBottom_value" name="clipBottom_value" class="input-text" disabled>
+						<select id="clipBottom_unit" name="clipBottom_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="property-text">Left:</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipLeft_auto" name="clipLeft_auto" value="auto" > Auto
+					</td>
+					<td class="property-text">
+						<input type="checkbox" id="clipLeft_other" name="clipLeft_other" value="other" onclick="Other.clipLeft(this);" > Other						
+						<input type="text" id="clipLeft_value" name="clipLeft_value" class="input-text" disabled>
+						<select id="clipLeft_unit" name="clipLeft_unit" class="input-select" disabled>
+							<option value="px">pixels</option>
+							<option value="pt">points</option>
+							<option value="cm">cm</option>
+							<option value="mm">mm</option>
+							<option value="in">in</option>
+							<option value="pc">picas</option>
+							<option value="em">ems</option>
+							<option value="ex">exs</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			No preview.
+		</td>
+	</tr>
+</table>
+<!-- End: POSITIONING properties -->
+		</div>
+		<div id="divExtensions" style="DISPLAY: none">
+<!-- Start: EXTENSIONS properties -->
+<table id="menuExtensions" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Page break before:</td>
+		<td class="property-text">
+			<select id="pageBreakBefore" name="pageBreakBefore" class="input-select">
+				<option value=""></option>
+				<option value="auto">auto</option>
+				<option value="always">always</option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+			</select>		
+			No preview. Only IE.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Page break after:</td>
+		<td class="property-text">
+			<select id="pageBreakAfter" name="pageBreakAfter" class="input-select">
+				<option value=""></option>
+				<option value="auto">auto</option>
+				<option value="always">always</option>
+				<option value="left">left</option>
+				<option value="right">right</option>
+			</select>		
+			No preview. Only IE.
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Cursor:</td>
+		<td class="property-text">
+			<select id="cursor" name="cursor" class="input-select">
+				<option value=""></option>
+				<option value="auto">auto</option>
+				<option value="crosshair">crosshair</option>
+				<option value="left">left</option>
+				<option value="default">default</option>
+				<option value="pointer">pointer</option>
+				<option value="move">move</option>
+				<option value="e-resize">e-resize</option>
+				<option value="ne-resize">ne-resize</option>
+				<option value="nw-resize">nw-resize</option>
+				<option value="n-resize">n-resize</option>
+				<option value="se-resize">se-resize</option>
+				<option value="sw-resize">sw-resize</option>
+				<option value="s-resize">s-resize</option>
+				<option value="w-resize">w-resize</option>
+				<option value="text">text</option>
+				<option value="wait">wait</option>
+				<option value="help">help</option>
+			</select>
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="cursor_other" name="cursor_other" value="other" onclick="Other.cursor(this);" > Other						
+			URL: <input type="text" id="cursor_value" name="cursor_value" class="input-text" disabled style="width: 120px;">
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Filter:</td>
+		<td class="property-text">
+			<input type="text" id="filter" name="filter" class="input-text" size="40" style="width: 200px;">
+		</td>
+		<td class="property-text">
+			Type:
+			<select id="filterType" name="filterType" class="input-select" onchange="Update.filterTypeChange(this);">
+				<option value=""></option>
+				<option value="Alpha(Opacity=?, FinishOpacity=?, Style=?, StartX=?, StartY=?, FinishX=?, FinishY=?)">Alpha</option>
+				<option value="BlendTrans(Duration=?)">BlendTrans</option>
+				<option value="Blur(Add=?, Direction=?, Strength=?)">Blur</option>
+				<option value="Chroma(Color=?)">Chroma</option>
+				<option value="DropShadow(Color=?, OffX=?, OffY=?, Positive=?)">DropShadow</option>
+				<option value="FlipH">FlipH</option>
+				<option value="FlipV">FlipV</option>
+				<option value="Glow(Color=?, Strength=?)">Glow</option>
+				<option value="Gray">Gray</option>
+				<option value="Invert">Invert</option>
+				<option value="Light">Light</option>
+				<option value="Mask(Color=?)">Mask</option>
+				<option value="RevealTrans(Duration=?, Transition=?)">RevealTrans</option>
+				<option value="Shadow(Color=?, Direction=?)">Shadow</option>
+				<option value="Wave(Add=?, Freq=?, LightStrength=?, Phase=?, Strength=?)">Wave</option>
+				<option value="Xray">Xray</option>
+			</select>
+			<br>Use sample "Image". Only IE.
+		</td>
+	</tr>
+</table>
+<!-- End: EXTENSIONS properties -->
+		</div>
+		<div id="divTarget" style="DISPLAY: none">
+<!-- Start: TARGET properties -->
+<table id="menuTarget" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td class="property-name">Tag:</td>
+		<td class="property-text">
+			<select id="targetTag" name="targetTag" class="input-select">
+				<option value=""></option>
+				<option value="P">P</option>
+				<option value="DIV">DIV</option>
+				<option value="SPAN">SPAN</option>
+				<option value="BODY">BODY</option>
+				<option value="H1">H1</option>
+				<option value="H2">H2</option>
+				<option value="H3">H3</option>
+				<option value="H4">H4</option>
+				<option value="H5">H5</option>
+				<option value="H6">H6</option>
+				<option value="BDO">BDO</option>
+				<option value="EM">EM</option>
+				<option value="STRONG">STRONG</option>
+				<option value="CITE">CITE</option>
+				<option value="DFN">DFN</option>
+				<option value="CODE">CODE</option>
+				<option value="SAMP">SAMP</option>
+				<option value="KBD">KBD</option>
+				<option value="VAR">VAR</option>
+				<option value="ABBR">ABBR</option>
+				<option value="ACRONYM">ACRONYM</option>
+				<option value="SUP">SUP</option>
+				<option value="SUB">SUB</option>
+				<option value="BLOCKQUOTE">BLOCKQUOTE</option>
+				<option value="Q">Q</option>
+				<option value="BR">BR</option>
+				<option value="PRE">PRE</option>
+				<option value="INS">INS</option>
+				<option value="DEL">DEL</option>
+				<option value="UL">UL</option>
+				<option value="OL">OL</option>
+				<option value="LI">LI</option>
+				<option value="DL">DL</option>
+				<option value="DT">DT</option>
+				<option value="DD">DD</option>
+				<option value="DIR">DIR</option>
+				<option value="MENU">MENU</option>
+				<option value="TABLE">TABLE</option>
+				<option value="CAPTION">CAPTION</option>
+				<option value="THEAD">THEAD</option>
+				<option value="TFOOT">TFOOT</option>
+				<option value="TBODY">TBODY</option>
+				<option value="COLGROUP">COLGROUP</option>
+				<option value="TR">TR</option>
+				<option value="TH">TH</option>
+				<option value="TD">TD</option>
+				<option value="A">A</option>
+				<option value="IMG">IMG</option>
+				<option value="OBJECT">OBJECT</option>
+				<option value="APPLET">APPLET</option>
+				<option value="TT">TT</option>
+				<option value="I">I</option>
+				<option value="B">B</option>
+				<option value="BIG">BIG</option>
+				<option value="STRIKE">STRIKE</option>
+				<option value="S">S</option>
+				<option value="U">U</option>
+				<option value="FONT">FONT</option>
+				<option value="HR">HR</option>
+				<option value="FRAME">FRAME</option>
+				<option value="NOFRAMES">NOFRAMES</option>
+				<option value="IFRAME">IFRAME</option>
+				<option value="FORM">FORM</option>
+				<option value="INPUT">INPUT</option>
+				<option value="BUTTON">BUTTON</option>
+				<option value="SELECT">SELECT</option>
+				<option value="OPTION">OPTION</option>
+				<option value="OPTGROUP">OPTGROUP</option>
+				<option value="TEXTAREA">TEXTAREA</option>
+				<option value="ISINDEX">ISINDEX</option>
+				<option value="LABEL">LABEL</option>
+				<option value="FIELDSET">FIELDSET</option>
+				<option value="LEGEND">LEGEND</option>
+			</select>		
+		</td>
+		<td class="property-text">
+			<input type="checkbox" id="targetTag_other" name="targetTag_other" value="other" onclick="Other.targetTag(this);" > Other						
+			<input type="text" id="targetTag_value" name="targetTag_value" class="input-text" disabled>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Class:</td>
+		<td class="property-text">
+			<input type="text" id="targetClass" name="targetClass" class="input-text">
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">ID:</td>
+		<td class="property-text">
+			<input type="text" id="targetId" name="targetId" class="input-text">
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Element:</td>
+		<td class="property-text">
+			<select id="targetElement" name="targetElement" class="input-select">
+				<option value=""></option>
+				<option value="first-child">first-child</option>
+				<option value="first-line">first-line</option>
+				<option value="first-letter">first-letter</option>
+				<option value="before">before</option>
+				<option value="after">after</option>
+				<option value="link">link</option>
+				<option value="visited">visited</option>
+				<option value="active">active</option>
+				<option value="hover">hover</option>
+				<option value="focus">focus</option>
+			</select>
+		</td>
+	</tr>
+</table>
+<!-- End: TARGET properties -->
+		</div>
+
+
+
+
+
+<div style="position: absolute; top: 320px;">
+<table width="100%">
+	<tr style="background-color: #E3E3C7;">
+		<td colspan="2">
+			<input type="button" value="Preview" onclick="Preview.change();" class="button" id="btnPreview">
+			<input type="button" value="Clear" onclick="Preview.clear();" class="button" id="btnClear">
+			<input type="button" value="Insert" onclick="Ok();" class="button" id="btnInsert" disabled>
+
+			<span class="property-text">Sample: </span>
+			<select id="sampleText" name="sampleText" class="input-select" onchange="Example.change(this);">
+				<option value="simpleText">Simple text</option>
+				<option value="longText">Long text</option>
+				<option value="simpleTable">Simple Table</option>
+				<option value="unorderedList">Unordered List</option>
+				<option value="image">Image</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="property-name">Preview:</td>
+		<td class="property-name">Code:</td>
+	</tr>
+	<tr>
+		<td class="preview-border">
+			<table>
+				<tr>
+					<td>
+						<div id="Preview">
+							Just sample<br>text
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<textarea id="Code" name="code" class="input-text" style="width: 350px; height: 100px;" readonly></textarea>
+		</td>
+	</tr>
+</table>
+</div>
+</form> 
+
+</body>
+</html>

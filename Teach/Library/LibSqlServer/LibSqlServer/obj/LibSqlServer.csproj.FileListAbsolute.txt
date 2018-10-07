@@ -1,0 +1,15 @@
+E:\Teach\VS\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.dll
+E:\Teach\VS\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.pdb
+E:\Teach\VS\Library\LibSqlServer\LibSqlServer\obj\Debug\ResolveAssemblyReference.cache
+E:\Teach\VS\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.dll
+E:\Teach\VS\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.pdb
+E:\Teach\WP\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.dll
+E:\Teach\WP\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.pdb
+E:\Teach\WP\Library\LibSqlServer\LibSqlServer\obj\Debug\ResolveAssemblyReference.cache
+E:\Teach\WP\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.dll
+E:\Teach\WP\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.pdb
+D:\ltweb-07-10-2018-LeLoi-b15dccn315\Teach\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.dll
+D:\ltweb-07-10-2018-LeLoi-b15dccn315\Teach\Library\LibSqlServer\LibSqlServer\bin\Debug\LibSqlServer.pdb
+D:\ltweb-07-10-2018-LeLoi-b15dccn315\Teach\Library\LibSqlServer\LibSqlServer\obj\Debug\ResolveAssemblyReference.cache
+D:\ltweb-07-10-2018-LeLoi-b15dccn315\Teach\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.dll
+D:\ltweb-07-10-2018-LeLoi-b15dccn315\Teach\Library\LibSqlServer\LibSqlServer\obj\Debug\LibSqlServer.pdb
